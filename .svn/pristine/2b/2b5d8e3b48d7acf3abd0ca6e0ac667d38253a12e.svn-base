@@ -1,0 +1,28 @@
+package xyz.itwill.dto;
+
+import lombok.Data;
+
+/*
+이름        널?       유형            
+--------- -------- ------------- 
+EX_NO     NOT NULL NUMBER(9)     	PK
+EX_DATE            DATE          	
+EX_CATE   NOT NULL VARCHAR2(100) 	
+EX_CASH            NUMBER(9)     	
+EX_CARD            NUMBER(9)     	
+EX_MEMO            VARCHAR2(100) 	
+EX_ID              VARCHAR2(50)  	FK
+EX_ACNAME          VARCHAR2(50)  	FK
+*/
+
+@Data
+public class Expenses {
+	private int ex_no;
+	private String ex_date;
+	private String ex_cate;
+	private int ex_cash;
+	private int ex_card;
+	private String ex_memo;
+	private String ex_id;
+	private String ex_acname;
+}

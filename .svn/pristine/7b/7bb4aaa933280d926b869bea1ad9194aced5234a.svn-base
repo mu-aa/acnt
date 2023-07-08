@@ -1,0 +1,38 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+<script src="/fullcalendar/dist/index.global.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<form action="calendar/popup" method="post">
+<table>
+
+<tr>
+<th>사용내용</th><th>현금</th><th>카드</th><th>카드분류</th>
+
+</tr>
+<tr>
+<td><input type="text" name="사용내용"></td>
+<td><input type="text" name="현금금액"></td>
+<td><input type="text" name="카드금액"></td>
+
+<td>
+<select>
+<c:forEach var="card" items="${cardList }">
+<option value="${card.cdName }">${card.cdName }</option>
+</c:forEach>
+</select>
+</td>
+</tr>
+</table>
+</form>
+</body>
+</html>

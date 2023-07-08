@@ -1,0 +1,54 @@
+package xyz.itwill.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dto.Account;
+import xyz.itwill.service.AccountService;
+
+
+@RequiredArgsConstructor
+@Controller
+public class AccountController {
+	private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+	private final AccountService accountService;
+	
+	@RequestMapping(value="/myAccount", method=RequestMethod.GET)
+	public String updateAccount(Model model) {
+		model.addAttribute("accountList",accountService.getAccountList());
+		return "popup/myAccount";
+	}
+	
+	@RequestMapping(value = "/myAccount", method = RequestMethod.POST)
+	public String account(Model model, @ModelAttribute Account account) {
+		if(account.getAcName()==null) {
+			account.setAcName("미지정");
+		}
+		if(account.getAcBank()==null) {
+			account.setAcBank("미지정");
+		}
+		if(account.getAcMemo()==null) {
+			account.setAcMemo("미지정");
+		}
+		if(account.getAcBank()==null || account.getAcBank()== "") {
+			accountService.addAccount(account);
+		} else {
+			accountService.modifyAccount(account);
+		}
+		
+		return "redirect:popup/myAccount";
+	}
+	
+	@RequestMapping(value="/myAccount_remove", method=RequestMethod.POST)
+	public String removeAccount(@RequestParam("acName") String acName) {
+		accountService.removeAccount(acName);
+		return "redirect:popup/myAccount";
+	}
+}

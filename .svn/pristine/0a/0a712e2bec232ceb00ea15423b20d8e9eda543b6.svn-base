@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.itwill.mapper.ExpensesMapper">
+	<insert id="insertExpenses">
+		<selectKey resultType="int" keyProperty="exNo" order="BEFORE">
+			select expenses_seq.nextval from dual
+		</selectKey>
+		insert into expenses values(#{exNo}, #{exDate}, #{exCate}, #{exCash}, #{exCard}, #{exMemo}, #{exId}, #{exAcname})
+	</insert>
+	
+	<update id="updateExpenses">
+		update expenses set ex_date=#{exDate}, ex_cate=#{exCate}, ex_cash=#{exCash}, ex_card=#{exCard}
+			, ex_memo=#{exMemo}, ex_id=#{exId}, ex_acname=#{exAcname} where ex_no=#{exNo}
+	</update>
+	
+	<delete id="deleteExpenses">
+		delete from expenses where ex_no=#{exNo}
+	</delete>
+	
+	<select id="selectSumAllExpenses" resultType="int">
+		select sum(ex_cash)+sum(ex_card) from expenses
+	</select>
+	
+	<select id="selectExpenses" resultType="Expenses">
+		select * from expenses where ex_no=#{exNo}
+	</select>
+	
+	<select id="selectExpensesList" resultType="Expenses">
+		select * from expenses order by ex_no
+	</select>
+</mapper>

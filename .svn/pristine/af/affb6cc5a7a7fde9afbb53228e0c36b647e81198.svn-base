@@ -1,0 +1,17 @@
+package xyz.itwill.mapper;
+
+import java.util.List;
+
+import xyz.itwill.dto.Budget;
+
+
+public interface BudgetMapper {
+	   int insertBudget(Budget budget);
+	   int updateBudget(Budget budget);
+	   int deleteBudget(Budget budget);
+	   Budget selectBudget(int num);
+	   List<Budget> selectBudgetList();   
+	}
+
+   
+

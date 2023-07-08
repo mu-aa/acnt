@@ -1,0 +1,21 @@
+package xyz.itwill.dto;
+
+import lombok.Data;
+
+/*
+ 이름         널?       유형            
+---------- -------- ------------- 
+CD_NAME    NOT NULL VARCHAR2(50)  
+CD_COMPANY NOT NULL VARCHAR2(50)  
+CD_STATUS  NOT NULL NUMBER(1)     
+CD_ACCOUNT          VARCHAR2(100) 
+ 
+ */
+@Data
+public class Card {
+	
+private String cdName;
+private String cdCompany;
+private int cdStatus;
+private String cdAccount;
+}

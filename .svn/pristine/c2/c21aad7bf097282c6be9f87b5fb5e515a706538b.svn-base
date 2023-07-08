@@ -1,0 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>REMOVE PAGE</title>
+</head>
+<body>
+	<form id="remove" method="post" action="<c:url value="/modify"/>?userid=${loginMember.userid}">
+		<div>
+			<table>
+				<tr>
+					<td colspan="2">정말로 탈퇴하시겠습니까?</td>
+				</tr>
+				<tr>
+					<td style="text-align: center"><button type="submit" id="okBtn" name="userstatus" value="0">확인</button></td>
+					<td style="text-align: center"><input type="button" value="취소"></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</body>
+</html>

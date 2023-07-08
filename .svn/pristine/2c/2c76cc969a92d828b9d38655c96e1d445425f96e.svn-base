@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.itwill.mapper.AccountMapper">
+	<insert id="insertAccount">
+		insert into card values(#{acName},#{acBank},#{acMemo},#{acBalance},#{acCard})
+	</insert>
+	
+	<update id="updateAccount">
+		update set card values(#{acName},#{acBank},#{acMemo},#{acBalance},#{acCard}) where acName = #{acName}
+	</update>
+	
+	<delete id="deleteAccount">		
+	delete from card where acName = #{acName}
+	</delete>
+		
+	<select id="selectAccountList" resultType="Account">
+		select * from account
+	</select>
+</mapper>

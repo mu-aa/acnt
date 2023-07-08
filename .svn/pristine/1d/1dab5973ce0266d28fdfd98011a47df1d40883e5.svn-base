@@ -1,0 +1,61 @@
+package xyz.itwill.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dto.Budget;
+import xyz.itwill.service.BudgetService;
+
+@RequiredArgsConstructor
+@Controller
+public class BudgetController {
+    private static final Logger logger = LoggerFactory.getLogger(BudgetController.class);
+    private BudgetService budgetService;
+    
+	@RequestMapping(value = "/budget", method = RequestMethod.GET)
+	public String budget(Model model) {
+		Budget budget0=budgetService.getBudget(0);
+		Budget budget1=budgetService.getBudget(1);
+		Budget budget2=budgetService.getBudget(2);
+		Budget budget3=budgetService.getBudget(3);
+		Budget budget4=budgetService.getBudget(4);
+		Budget budget5=budgetService.getBudget(5);
+		Budget budget6=budgetService.getBudget(6);
+		Budget budget7=budgetService.getBudget(7);
+		Budget budget8=budgetService.getBudget(8);
+		Budget budget9=budgetService.getBudget(9);
+		Budget budget10=budgetService.getBudget(10);
+		
+		List<Budget> budgetList=new ArrayList<Budget>();
+		budgetList.add(budget0);
+		budgetList.add(budget1);
+		budgetList.add(budget2);
+		budgetList.add(budget3);
+		budgetList.add(budget4);
+		budgetList.add(budget5);
+		budgetList.add(budget6);
+		budgetList.add(budget7);
+		budgetList.add(budget8);
+		budgetList.add(budget9);
+		budgetList.add(budget10);
+		
+		
+		/*model.addAttribute("", budgetService.getSumAllBudget());*/
+		return "table/budget";
+	}
+	
+	@RequestMapping(value = "/budget", method = RequestMethod.POST)
+	public String budget(Model model, Budget budget) {
+		budgetService.addBudget(budget);
+		
+		return "success";
+	}
+}

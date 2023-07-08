@@ -1,0 +1,145 @@
+package xyz.itwill.controller;
+
+import java.time.LocalDate;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dto.Expenses;
+import xyz.itwill.dto.Member;
+import xyz.itwill.exception.ExistsUserinfoException;
+import xyz.itwill.exception.LoginAuthFailException;
+import xyz.itwill.exception.UserinfoNotFoundException;
+import xyz.itwill.service.ExpensesService;
+import xyz.itwill.service.MemberService;
+
+/**
+ * Handles requests for the application home page.
+ */
+@Controller
+@RequiredArgsConstructor
+public class HomeController {
+	private final ExpensesService expensesService;
+	private final MemberService memberService;
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public String main(Model model, Expenses expenses) {
+		model.addAttribute("expensesList", expensesService.getExpensesList());
+		model.addAttribute("expensesSumAll", expensesService.getSumAllExpenses());
+		return "main";
+	}
+	
+	@RequestMapping(value="/", method=RequestMethod.POST)
+	public String main(@ModelAttribute Expenses expenses, Model model) {
+		if(expenses.getExCate()==null) {
+			expenses.setExCate("미분류");
+		}
+		if(expenses.getExAcname()==null) {
+			expenses.setExAcname("미지정");
+		}
+		if(expenses.getExDate()==null || expenses.getExDate().equals("")) {
+			expenses.setExDate(LocalDate.now().toString().substring(0,10));
+		}
+		if(expenses.getExCard()==null) {
+			expenses.setExCard(0);
+		}
+		if(expenses.getExCash()==null) {
+			expenses.setExCash(0);
+		}
+		if(expenses.getExId()==null) {
+			expenses.setExId("testID");
+			expensesService.addExpenses(expenses);	
+		} else {
+			expensesService.modifyExpenses(expenses);
+		}
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/remove")
+	@ResponseBody
+	public String remove(HttpServletRequest request) {
+		String[] exNoList=request.getParameterValues("exNoList");
+		
+		for(String exNo:exNoList) {
+			expensesService.removeExpenses(Integer.parseInt(exNo));
+		}
+		
+		return "redirect:/";
+	}
+	
+	
+	
+	
+	
+	
+	//회원가입 관련
+	@RequestMapping(value="/join", method=RequestMethod.GET)
+	public String join() {
+		return "join/JoinForm";
+	}
+	@RequestMapping(value="/join", method=RequestMethod.POST)
+	public String join(@ModelAttribute Member member) throws ExistsUserinfoException {
+		memberService.addMember(member);
+		return "redirect:/login";
+	}	
+	@RequestMapping(value="/idcheck", method=RequestMethod.GET)
+	@ResponseBody
+	public String idChekc(@RequestParam String userid) throws UserinfoNotFoundException {
+		Member member=memberService.getMember(userid);
+		return "fail";
+	}
+	
+	
+	//로그인 관련
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String login() {
+		return "login/LoginForm";
+	}
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public String login(@ModelAttribute Member member, HttpSession session) throws LoginAuthFailException {
+		Member authMember=memberService.loginAuth(member);
+		session.setAttribute("loginMember", authMember);
+		return "redirect:/";
+	}
+	//로그아웃 관련
+	@RequestMapping("/logout")
+	public String login(HttpSession session) {
+		session.invalidate();
+		//
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/budget", method=RequestMethod.GET)
+	public String budget() {
+		return "table/budget";
+	}
+	@RequestMapping(value="/income", method=RequestMethod.GET)
+	public String income() {
+		return "income/income";
+	}
+	
+	@RequestMapping(value="/myAccount", method=RequestMethod.GET)
+	public String myAccount() {
+		return "popup/myAccount";
+	}
+	
+	@ExceptionHandler(UserinfoNotFoundException.class)
+	@ResponseBody
+	public String exceptionHanlder() {
+		return "success";
+	}
+}

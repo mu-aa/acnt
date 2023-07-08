@@ -1,0 +1,227 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+
+<style type="text/css">
+#budget-table {width:100%; border:2px solid #f0f1f1; margin-top: 100px; border-collapse: collapse; font-size: 14px; font-weight: 700;}
+#budget-table td, #budget-table th {border:1px solid #c3c4c7; border-collapse: collapse; height:30px;}
+#budget-table th {background-color: #f0f0f1; text-align: center;}
+#budget-table input {text-align: right; border: none; width: 93%; font-size: 14px;}
+#budget-table input:focus {outline: 1px solid #03C75A; outline-offset: 8px;}
+#bugget-table .budget {text-align: center;}
+.category {width:15%;}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+#footer-table {width: 0; height: 0;}
+
+.calendar {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.calendar input {
+	border: 1px solid #dcdcde;
+	width: 162px;
+	height: 40px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: 900;
+	font-family: 'Kanit', sans-serif;
+	padding-right: 15px;
+}
+
+#footer-table {
+	display: flex;
+	position: fixed;
+	width: 95%; height: 60px;
+	margin-left: 10%;
+	bottom: 0; left: 0;
+	background-color: white;
+	flex-direction: row;
+	box-shadow: -1px -1px 4px #AAAFB5;
+	z-index: 1;
+}
+#footer-table td {
+	width: 150px; height: 10px;
+	border: none;
+	font-size: 15px;
+}
+
+#footer-table button { 
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: white;
+    border:none;
+    border-style: none;
+}
+#add-selected-rows-btn { 
+	border-radius: 2px;
+    border: 1px solid #d9d9d9;
+    background-color: #fff;
+    font-size: 11px;
+    font-weight: 900;
+    line-height: 16px;
+}
+button:hover {
+	cursor: pointer;
+}
+#expenses-total {color: #03C75A;}
+#income-total {color: #3e7aff;}
+</style>
+</head>
+<body>
+
+<!-- 날짜 지정 -->
+<!-- ㄴ 최소값 최대값 지정 필요 -->
+<div class="calendar">
+  	<div>
+		<input type="date" id="start-date-input" value="2023-03-01">&nbsp;&nbsp;&nbsp;&nbsp;─&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
+	<div>
+		<input type="date" id="end-date-input" value="2023-03-31">
+	</div>
+</div>
+
+<h2>예산 입력</h2>
+<div id="tableZone" class="expenses">
+	<form method="post" name="form_b">
+	<table id="budget-table" style="table-layout:fixed;">
+		<thead>
+			<tr>
+				<th class="category">분류</th>
+				<th>예산</th>
+				<th>지출</th>
+				<th>남은 돈</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+			     <td class="category">식비</td>
+			     <td class="budget"><input type="number" min="0" max="999999" name="budget-food" value="${budget}"></td>
+			     <td><input type="number" min="0" max="999999" name="expense-food" value="100000"></td>
+			     <td><input type="number" min="0" max="999999" name="remaining-food" value="100000" readonly></td>
+		   </tr>
+		   <tr>
+			     <td class="category">주거/통신</td>
+			     <td class="budget"><input type="number" min="0" max="999999" name="budget-housing" value="50000"></td>
+			     <td><input type="number" min="0" max="999999" name="expense-housing" value="10000"></td>
+			     <td><input type="number" min="0" max="999999" name="remaining-housing" value="200000" readonly></td>
+		   </tr>
+		   <tr>
+			     <td class="category">생활용품</td>
+			     <td class="budget"><input type="number" min="0" max="999999" name="budget-hoom" value="200000"></td>
+			     <td><input type="number" min="0" max="999999" name="expense-hoom" value="200000"></td>
+			     <td><input type="number" min="0" max="999999" name="remaining-hoom" value="100000" readonly></td>
+		   </tr>
+		   <tr>
+		     	<td class="category">의복/미용</td>
+			    <td class="budget"><input type="number" min="0" max="999999" name="budget-cloths" value="50000"></td>
+			    <td><input type="number" min="0" max="999999" name="expense-cloths" value="10000"></td>
+			    <td><input type="number" min="0" max="999999" name="remaining-cloths" value="200000" readonly></td>
+		   </tr>
+		   <tr>
+		     	<td class="category">건강/문화</td>
+			    <td class="budget"><input type="number" min="0" max="999999" name="budget-healthy" value="200000"></td>
+			    <td><input type="number" min="0" max="999999" name="expense-healthy" value="200000"></td>
+			    <td><input type="number" min="0" max="999999" name="remaining-healthy" value="100000" readonly></td>
+		   </tr>
+		   <tr>
+		    	<td class="category">교육/육아</td>
+			    <td class="budget"><input type="number" min="0" max="999999" name="budget-edu" value="50000"></td>
+			    <td><input type="number" min="0" max="999999" name="expense-edu" value="10000"></td>
+			    <td><input type="number" min="0" max="999999" name="remaining-edu" value="200000" readonly></td>
+		   </tr>
+		   <tr>
+		     	<td class="category">교통/차량</td>
+			    <td class="budget"><input type="number" min="0" max="999999" name="budget-car" value="200000"></td>
+			    <td><input type="number" min="0" max="999999" name="expense-car" value="200000"></td>
+			    <td><input type="number" min="0" max="999999" name="remaining-car" value="100000" readonly></td>
+		   </tr>
+		   <tr>
+		    	<td class="category">경조사/회비</td>
+			     <td class="budget"><input type="number" min="0" max="999999" name="budget-family" value="50000"></td>
+			     <td><input type="number" min="0" max="999999" name="expense-family" value="10000"></td>
+			     <td><input type="number" min="0" max="999999" name="remaining-family" value="200000" readonly></td>
+		   </tr>
+		   <tr>
+		    	 <td class="category">세금/이자</td>
+			     <td class="budget"><input type="number" min="0" max="999999" name="budget-tax" value="200000"></td>
+			     <td><input type="number" min="0" max="999999" name="expense-tax" value="200000"></td>
+			     <td><input type="number" min="0" max="999999" name="remaining-tax" value="100000" readonly></td>
+		   </tr>
+		   <tr>
+		    	 <td class="category">용돈/기타</td>
+			     <td class="budget"><input type="number" min="0" max="999999" name="budget-money" value="50000"></td>
+			     <td><input type="number" min="0" max="999999" name="expense-money" value="10000"></td>
+			     <td><input type="number" min="0" max="999999" name="remaining-money" value="200000" readonly></td>
+		   </tr>
+		   <tr>
+		    	 <td class="category">미분류</td>
+			     <td class="budget"><input type="number" min="0" max="999999" name="budget-non" value="50000"></td>
+			     <td><input type="number" min="0" max="999999" name="expense-non" value="10000"></td>
+			     <td><input type="number" min="0" max="999999" name="remaining-non" value="200000" readonly></td>
+		   </tr>
+		    <tr>
+		    	 <td class="category">합계</td>
+			     <td class="budget"><input type="number" min="0" max="999999" name="budget-sum" value="50000" readonly></td>
+			     <td><input type="number" min="0" max="999999" name="expense-sum" value="10000" readonly></td>
+			     <td><input type="number" min="0" max="999999" name="remaining-sum" value="200000" readonly></td>
+		   </tr>
+		</tbody>
+	</table>
+	</form>
+</div>
+	
+<table id="footer-table">
+	<tfoot>
+		<tr>
+			<!-- 저장하기 버튼 -->
+			<td><button type="submit" onclick="save();"><img src="resources/images/save.png"></button></td>
+		</tr>
+	</tfoot>
+</table>
+
+<script type="text/javascript">
+function save() {
+	$("#budget-table tr").each(function(i) {
+		if(i==0) return;
+		
+		var array=["bCate","bSum"];
+		var data=[];
+		
+		$(this).children("td").each(function() {
+			data.push($(this).children().val());
+		});
+		
+		var obj={};
+		
+		for(i=0;i<array.length;i++) {
+			obj[array[i]]=data[i]
+		}
+		
+		$.ajax({
+	        type : "post",
+	        url : "${pageContext.request.contextPath}/budget",
+	        traditional: true,
+	        data : obj,
+	        dataType : "text",
+		    success : function(result){
+		    	console.log(result);
+		    },
+		    error : function(xhr){
+		       console.log("AJAX_ERROR = "+xhr.status);
+		    }
+		});
+	});
+}
+</script>
+</body>
+</html>

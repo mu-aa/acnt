@@ -1,0 +1,14 @@
+@charset "UTF-8";
+.graph {display:flex;}
+.graph li {margin-left: 15px; padding-left: 35px; padding-right: 35px;}
+.graph li div {position: relative; width:15px; height: 200px; background: #dcdcde; text-align: center;}
+.graph li div span {position: absolute; left: 0; right: 0; bottom: 0; height: 0px; background: #1ed41b;}
+.graphZone {display:flex;}
+
+.tableZone {display:flex;}
+input {border-style: none;}
+table {border:2px solid #f0f1f1; width: 1500px; margin-top: 25px; border-collapse: collapse; font-size: 12px;}
+td, th {border:1px solid #c3c4c7; border-collapse: collapse;}
+th {background-color: #f0f0f1;}
+
+li p {font-size: 12px;}

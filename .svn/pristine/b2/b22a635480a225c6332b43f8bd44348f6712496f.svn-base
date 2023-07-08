@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.IncomeMapper">
+
+<insert id="insertIncome">
+		insert into income (inId, inCate, inAmount, inAcname, inMemo, inDate)
+		values (#{in_id}, #{in_cate}, #{in_amount}, #{in_acname}, #{in_memo}, #{in_date})
+	</insert>
+
+	<update id="updateIncome">
+		update income
+		set in_id = #{inId},
+		in_cate = #{inCate},
+		in_amount = #{inAmount},
+		in_acname = #{inAcname},
+		in_memo = #{inMemo},
+		in_date = #{inDate}
+		where in_no = #{inNo}
+	</update>
+
+	<delete id="deleteIncome">
+		delete from income where in_no = #{inNo}
+	</delete>
+	
+	<select id="selectIncome" resultType="Income">
+		select * from Income where in_no=#{inNo}
+	</select>
+	
+	<select id="selectIncomeList" resultType="Income">
+		select * from Income order by in_no
+	</select>
+</mapper>

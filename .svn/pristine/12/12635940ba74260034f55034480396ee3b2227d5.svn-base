@@ -1,0 +1,41 @@
+package xyz.itwill.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dto.Budget;
+import xyz.itwill.mapper.BudgetMapper;
+
+@Repository
+@RequiredArgsConstructor
+public class BudgetDAOImpl implements BudgetDAO {
+	private final SqlSession sqlSession;
+	
+	@Override
+	public int insertBudget(Budget budget) {
+		return sqlSession.getMapper(BudgetMapper.class).insertBudget(budget);
+	}
+
+	@Override
+	public int updateBudget(Budget budget) {
+		return sqlSession.getMapper(BudgetMapper.class).updateBudget(budget);
+	}
+
+	@Override
+	public int deleteBudget(Budget budget) {
+		return sqlSession.getMapper(BudgetMapper.class).deleteBudget(budget);
+	}
+
+	@Override
+	public Budget selectBudget(int num) {
+		return sqlSession.getMapper(BudgetMapper.class).selectBudget(num);
+	}
+
+	@Override
+	public List<Budget> selectBudgetList() {
+		return sqlSession.getMapper(BudgetMapper.class).selectBudgetList();
+	}
+}

@@ -1,0 +1,15 @@
+package xyz.itwill.dao;
+
+import java.util.List;
+
+import xyz.itwill.dto.Budget;
+
+
+	public interface BudgetDAO {
+		int	insertBudget(Budget budget);
+		int updateBudget(Budget budget);
+		int deleteBudget(Budget Budget);
+		Budget selectBudget(int num);
+		List<Budget> selectBudgetList();
+
+}

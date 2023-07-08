@@ -1,0 +1,55 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+  <style type="text/css">
+  .calendar {
+  	width: 500px;
+  	height: px;
+  }
+  
+  
+  </style>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+    <script src='fullcalendar/dist/index.global.js'></script>
+    <script>
+ 
+	
+    document.addEventListener('DOMContentLoaded', function() {
+    	  var calendarEl = document.getElementById('calendar');
+
+    	  var calendar = new FullCalendar.Calendar(calendarEl, {
+    	    // 옵션 설정
+    	    // ...
+
+    	    // 날짜 클릭 이벤트 설정
+    	    dateClick: function(info) {
+    	    
+    	      var url = 'calendar/popup'; // 팝업창을 띄울 페이지 URL
+    	      var queryString = '?date=' + info.dateStr; // 쿼리 문자열 생성
+    	    
+    	      // 팝업창을 띄우기 위한 설정
+    	      var popupWidth = 1200; // 팝업창 가로 크기
+    	      var popupHeight = 700; // 팝업창 세로 크기
+    	      var popupLeft = window.screenLeft || window.screenX; // 팝업창 좌표 X
+    	      var popupTop = window.screenTop || window.screenY; // 팝업창 좌표 Y
+    	      popupLeft += (window.innerWidth / 2) - (popupWidth / 2); // 팝업창 X 좌표 계산
+    	      popupTop += (window.innerHeight / 2) - (popupHeight / 2); // 팝업창 Y 좌표 계산
+    	      
+    	      // 팝업창 열기
+    	      window.open(url + queryString, 'popup', 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + popupLeft + ',top=' + popupTop);
+    	    }
+    	  });
+
+    	  calendar.render();
+    	});
+    
+
+    </script>
+  </head>
+  <body>
+    <div id='calendar'></div>
+  </body>
+</html>

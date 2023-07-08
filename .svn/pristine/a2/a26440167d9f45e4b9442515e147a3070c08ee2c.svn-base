@@ -1,0 +1,57 @@
+package xyz.itwill.controller;
+
+import java.time.LocalDate;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import lombok.RequiredArgsConstructor;
+import oracle.net.aso.m;
+import xyz.itwill.dao.IncomeDAO;
+import xyz.itwill.dto.Income;
+import xyz.itwill.service.IncomeService;
+
+@RequiredArgsConstructor
+@Controller
+public class IncomeController {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private final IncomeService incomeService;
+	
+	
+	@RequestMapping(value = "/income", method = RequestMethod.GET)
+	public String updateIncome(Model model) {
+		model.addAttribute("incomeList", incomeService.getIncomeList());
+		
+		return "income/income";
+	}
+	
+	@RequestMapping(value = "/income", method = RequestMethod.POST)
+	public String income(Model model, Income income) {
+		if(income.getInCate()==null) {
+			income.setInCate("미분류");
+		}
+		if(income.getInAcname()==null) {
+			income.setInAcname("미지정");
+		}
+		if(income.getInDate()==null || income.getInDate().equals("")) {
+			income.setInDate(LocalDate.now().toString().substring(0,10));
+		}
+		if(income.getInAmount()==null) {
+			income.setInAmount(0);
+		}
+		if(income.getInId()==null) {
+			income.setInId("testID");
+			incomeService.addIncome(income);	
+		} else {
+			incomeService.modifyIncome(income);
+		}
+		
+		return "redirect:/income/income";
+	}
+}

@@ -1,0 +1,38 @@
+package xyz.itwill.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import xyz.itwill.dao.IncomeDAO;
+import xyz.itwill.dto.Income;
+
+@Controller
+public class IncomeController {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private final IncomeDAO incomeDAO;
+	
+	public IncomeController(IncomeDAO incomeDAO) {
+        this.incomeDAO = incomeDAO;
+    }
+	
+	@RequestMapping(value = "/income", method = RequestMethod.POST)
+	public String updateIncome(@ModelAttribute("income") Income income) {
+		
+		incomeDAO.updateIncome(income);
+		
+		return "income/income";
+	}
+	
+	@RequestMapping(value = "/income", method = RequestMethod.GET)
+	public String income(Model model) {
+		
+		model.addAttribute("income", new Income());
+		
+		return "income/income";
+	}
+}

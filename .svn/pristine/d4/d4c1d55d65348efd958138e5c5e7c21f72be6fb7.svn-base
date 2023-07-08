@@ -1,0 +1,116 @@
+package xyz.itwill.controller;
+
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dto.Member;
+import xyz.itwill.exception.ExistsUserinfoException;
+import xyz.itwill.exception.LoginAuthFailException;
+import xyz.itwill.exception.UserinfoNotFoundException;
+import xyz.itwill.service.MemberService;
+
+@Controller
+@RequiredArgsConstructor
+public class MemberController {
+	private final MemberService memberService;
+	private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
+	
+	
+	//회원가입 관련
+	@RequestMapping(value="/join", method=RequestMethod.GET)
+	public String join() {
+		return "join/JoinForm";
+	}
+	@RequestMapping(value="/join", method=RequestMethod.POST)
+	public String join(@ModelAttribute Member member) throws ExistsUserinfoException {
+		memberService.addMember(member);
+		return "redirect:/login";
+	}	
+	@RequestMapping(value="/idcheck", method=RequestMethod.GET)
+	@ResponseBody
+	public String idChekc(@RequestParam String userid) throws UserinfoNotFoundException {
+		Member member=memberService.getMember(userid);
+		return "fail";
+	}
+	
+	
+	//로그인 관련
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String login() {
+		return "login/LoginForm";
+	}
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public String login(@ModelAttribute Member member, HttpSession session) throws LoginAuthFailException {
+		Member authMember=memberService.loginAuth(member);
+		session.setAttribute("loginMember", authMember);
+		return "redirect:/";
+	}
+	
+	//로그아웃 관련
+	@RequestMapping("/logout")
+	public String login(HttpSession session) {
+		session.invalidate();
+		//
+		return "redirect:/";
+	}
+	
+	//내정보 보기 관련
+	@RequestMapping("/view")
+	public String view(@RequestParam String userid, Model model) throws UserinfoNotFoundException {
+		model.addAttribute("member", memberService.getMember(userid));
+		return "login/loginView";
+	}
+	
+	//내정보 변경 관련
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public String modify(@RequestParam String userid, Model model) throws UserinfoNotFoundException {
+		model.addAttribute("member", memberService.getMember(userid));
+		return "login/loginModify";
+	}
+	@RequestMapping(value="/modify", method = RequestMethod.POST)
+	public String modify(@ModelAttribute Member member, HttpSession session) throws UserinfoNotFoundException {
+		memberService.modifyMember(member);
+		//
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		if(loginMember.getUserid().equals(member.getUserid())) {
+			session.setAttribute("loginMember", memberService.getMember(member.getUserid()));
+		}
+		return "redirect:/view?userid="+member.getUserid();
+	}
+	//탈퇴관련
+	
+	@RequestMapping(value = "/zero", method = RequestMethod.GET)
+	public String zero(@RequestParam String userid, Model model ) throws UserinfoNotFoundException {
+		model.addAttribute("member", memberService.getMember(userid));
+		return "login/removeForm";
+	}
+	@RequestMapping(value="/zero", method = RequestMethod.POST)
+	public String zero(@ModelAttribute Member member, HttpSession session) throws UserinfoNotFoundException {
+		memberService.zeroMember(member);
+		//
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		if(loginMember.getUserid().equals(member.getUserid())) {
+			session.setAttribute("loginMember", memberService.getMember(member.getUserid()));
+		}
+		return "redirect:/view?userid="+member.getUserid();
+	}
+	
+	
+	
+	@ExceptionHandler(UserinfoNotFoundException.class)
+	@ResponseBody
+	public String exceptionHanlder() {
+		return "success";
+	}
+}

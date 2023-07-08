@@ -1,0 +1,66 @@
+package xyz.itwill.controller;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dto.Account;
+import xyz.itwill.service.AccountService;
+
+@Controller
+@RequiredArgsConstructor
+public class AccountController {
+	private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+    private final AccountService accountService;
+   
+    @RequestMapping(value = "popup/myAccount", method = RequestMethod.GET)
+	public String account(Model model) {
+		model.addAttribute("accountList", accountService.getAccountList());
+
+		return "popup/myAccount";
+	}
+    
+    @RequestMapping(value = "popup/myAccount/list", method = RequestMethod.GET)
+    public String getAccountList(Model model) {
+        List<Account> accountList = accountService.getAccountList();
+        model.addAttribute("accountList", accountList);
+        return "popup/myAccount/list";
+    }
+    
+    @RequestMapping(value = "popup/myAccount/add", method = RequestMethod.GET)
+    public String addAccountForm(Account account) {
+        return "popup/myAccount/create";
+    }
+    
+    @RequestMapping(value = "popup/myAccount/add", method = RequestMethod.POST)
+    public String addAccount(Account account) {
+        accountService.addAccount(account);
+        return "redirect:popup/myAccount/list";
+    }
+    
+    @RequestMapping(value = "popup/myAccount/update/{acName}", method = RequestMethod.GET)
+    public String updateAccount(@PathVariable("acName") String acName, Model model) {
+        Account account = accountService.getAccount(acName);
+        model.addAttribute("account", account);
+        return "popup/myAccount/update";
+    }
+    
+    @RequestMapping(value = "popup/myAccount/update", method = RequestMethod.POST)
+    public String modifyAccount(Account account) {
+        accountService.modifyAccount(account);
+        return "redirect:popup/myAccount/list";
+    }
+    
+    @RequestMapping(value = "popup/myAccount/remove/{acName}", method = RequestMethod.GET)
+    public String removeAccount(@PathVariable("acName") String acName) {
+        accountService.removeAccount(acName);
+        return "redirect:popup/myAccount/list";
+    }
+}

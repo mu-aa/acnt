@@ -1,0 +1,256 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>acnt</title>
+	<style type="text/css">
+	input{border-style: none;}
+	table{border:2px solid #f0f1f1; width: 1500px; margin-top: 25px; border-collapse: collapse; font-size: 12px;}
+	td, th{border:1px solid #c3c4c7; border-collapse: collapse;}
+	th{background-color: #f0f0f1;}
+	</style>
+</head>
+<body>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="main-box">
+				<header class="main-box-header clearfix">
+					<h2>지출</h2>
+				</header>
+				
+				<div class="main-box-body clearfix">
+					<div id="graph-bar" style="height: 300px; padding: 0px; position: relative;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<table>
+		
+		<tr>	
+			<th><input type="checkbox"></th>
+			<th>날짜</th>
+			<th>카드</th>
+			<th>현금</th>
+			<th>분류</th>
+			<th>출금통장</th>
+			<th>메모</th>
+		</tr>
+		<tr class="inputTable">
+			<td><input type="checkbox"></td>
+			<td><input type="text" value="2023.03.05"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+		</tr>
+		<tr class="inputTable">
+			<td><input type="checkbox"></td>
+			<td><input type="text" value="2023.03.05"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+		</tr>
+		<tr class="inputTable">
+			<td><input type="checkbox"></td>
+			<td><input type="text" value="2023.03.05"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+		</tr>
+		<tr class="inputTable">
+			<td><input type="checkbox"></td>
+			<td><input type="text" value="2023.03.05"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+		</tr>
+		<tr class="inputTable">
+			<td><input type="checkbox"></td>
+			<td><input type="text" value="2023.03.05"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+		</tr>
+		<tr class="inputTable">
+			<td><input type="checkbox"></td>
+			<td><input type="text" value="2023.03.05"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+		</tr>
+		<tr class="inputTable">
+			<td><input type="checkbox"></td>
+			<td><input type="text" value="2023.03.05"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+		</tr>
+		<tr class="inputTable">
+			<td><input type="checkbox"></td>
+			<td><input type="text" value="2023.03.05"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+		</tr>
+	</table>
+	
+
+		
+	<!-- 필수요소 -->
+	<script src="${pageContext.request.contextPath}/resources/components/jquery/dist/jquery.min.js"></script>
+	
+	<!-- 바 그래프 -->
+	<script src="${pageContext.request.contextPath}/resources/components/flot/jquery.flot.js"></script>
+	
+	<!-- 바 나누기 -->
+	<script src="${pageContext.request.contextPath}/resources/components/flot-orderBars/js/jquery.flot.orderBars.js"></script>
+	
+	<script>
+	$(function() {
+		// bar chart
+		if ($('#graph-bar').length) {
+			var db1 = [];
+			for (var i = 0; i <= 10; i += 1) {
+				db1.push([i, parseInt(Math.random() * 30)]);
+			}
+
+			var db2 = [];
+			for (var i = 0; i <= 10; i += 1) {
+				db2.push([i, parseInt(Math.random() * 30)]);
+			}
+
+			var db3 = [];
+			for (var i = 0; i <= 10; i += 1) {
+				db3.push([i, parseInt(Math.random() * 30)]);
+			}
+			
+			var series = new Array();
+
+			series.push({
+				data : db1,
+				bars : {
+					show : true,
+					barWidth : 0.2,
+					order : 1,
+					lineWidth: 1,
+					fill: 1
+				}
+			});
+			series.push({
+				data : db2,
+				bars : {
+					show : true,
+					barWidth : 0.2,
+					order : 2,
+					lineWidth: 1,
+					fill: 1
+				}
+			});
+			series.push({
+				data : db3,
+				bars : {
+					show : true,
+					barWidth : 0.2,
+					order : 3,
+					lineWidth: 1,
+					fill: 1
+				}
+			}); 
+
+			$.plot("#graph-bar", series, {
+				colors: ['#e84e40', '#ffc107', '#8bc34a', '#03a9f4', '#9c27b0', '#90a4ae'],
+				grid: {
+					tickColor: "#ddd",
+					borderWidth: 0
+				},
+				shadowSize: 0
+			});
+		}
+		
+		
+		// graph real time
+		if ($('#graph-flot-realtime').length) {
+		
+			var data = [],
+				totalPoints = 300;
+
+			function getRandomData() {
+
+				if (data.length > 0)
+					data = data.slice(1);
+
+				// Do a random walk
+
+				while (data.length < totalPoints) {
+
+					var prev = data.length > 0 ? data[data.length - 1] : 50,
+						y = prev + Math.random() * 10 - 5;
+
+					if (y < 0) {
+						y = 0;
+					} else if (y > 100) {
+						y = 100;
+					}
+
+					data.push(y);
+				}
+
+				// Zip the generated y values with the x values
+
+				var res = [];
+				for (var i = 0; i < data.length; ++i) {
+					res.push([i, data[i]])
+				}
+
+				return res;
+			}
+			
+			
+
+			// Set up the control widget
+			var plot = $.plot("#graph-flot-realtime", [ getRandomData() ], {
+				series: {
+					lines: { 
+						show: true,
+						lineWidth: 2,
+						fill: true, 
+						fillColor: { colors: [ { opacity: 0.3 }, { opacity: 0.3 } ] }
+					},
+					shadowSize: 0	// Drawing is faster without shadows
+				},
+				colors: ["#e84e40"],
+				yaxis: {
+					min: 0,
+					max: 100
+				},
+				xaxis: {
+					show: false
+				}
+			});
+			
+		}
+		
+		
+	});
+	</script>
+</body>
+</html>

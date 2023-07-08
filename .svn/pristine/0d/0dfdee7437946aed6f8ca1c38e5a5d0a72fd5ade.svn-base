@@ -1,0 +1,9 @@
+package xyz.itwill.mapper;
+
+import xyz.itwill.dto.Budgetary;
+
+public interface BudgetaryMapper {
+	int insertBudgetary(Budgetary budgetary);
+	int updateBudgetary(Budgetary budgetary);
+	Budgetary selectBudgetary();
+}

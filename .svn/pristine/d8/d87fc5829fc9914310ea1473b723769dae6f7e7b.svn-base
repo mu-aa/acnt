@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.itwill.mapper.BudgetMapper">
+	<insert id="insertBudget">
+	 	insert into budget values(#{bCate}, #{bSum})
+	</insert>
+	
+	<update id="updateBudget">
+		update budget
+	  	set b_sum=#{bSum}
+	  	where b_cate=#{bCate}   
+	</update>
+	
+	<select id="selectBudget" resultType="Budget">
+		select * from budget where b_cate=#{bCate}
+	</select>
+	
+	<select id="selectListBudget" resultType="Budget">
+		select * from budget order by b_cate;
+	</select>
+	
+	<select id="selectSumAllBudget" resultType="Integer">
+	 	select sum(b_sum) from budget where b_cate=#{bCate}
+	</select>  
+</mapper>

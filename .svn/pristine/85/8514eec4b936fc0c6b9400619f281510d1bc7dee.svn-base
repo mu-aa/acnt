@@ -1,0 +1,3 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<p style="text-align: right;">수입합계 : 0 지출합계 : 0 <button type="button">저장하기</button></p>

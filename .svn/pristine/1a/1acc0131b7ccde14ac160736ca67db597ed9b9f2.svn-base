@@ -1,0 +1,8 @@
+package xyz.itwill.dto;
+
+public class Budget {
+
+private int b_sum;
+private String b_cate;
+
+}

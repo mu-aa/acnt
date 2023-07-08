@@ -1,0 +1,19 @@
+package xyz.itwill.dto;
+
+import lombok.Data;
+
+@Data
+public class Budgetary {
+	private int food;
+	private int home;
+	private int dn;
+	private int clothes;
+	private int culture;
+	private int edcation;
+	private int car;
+	private int fee;
+	private int tax;
+	private int pocket;
+	private int transfer;
+	private int card;
+}

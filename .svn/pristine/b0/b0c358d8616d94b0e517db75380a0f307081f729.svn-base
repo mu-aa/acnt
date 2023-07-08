@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.itwill.mapper.CardMapper">
+	<insert id="insertCard">
+		insert into card values(#{cdName},#{cdCompany},#{cdStatus},#{cdAccount})
+	</insert>
+	
+	<delete id="deleteCard">		
+	delete from card where cdName = #{cdName}
+	</delete>
+		
+	<select id="selectCardList" resultType="Card">
+		select * from card
+	</select>
+</mapper>

@@ -1,0 +1,13 @@
+package xyz.itwill.dao;
+
+import java.util.List;
+
+import xyz.itwill.dto.Income;
+
+public interface IncomeDAO {
+	int insertIncome(Income income);
+	int updateIncome(Income income);
+	int deleteIncome(int inNo);
+	Income selectIncome(int inNo);
+	List<Income> selectIncomeList();
+}

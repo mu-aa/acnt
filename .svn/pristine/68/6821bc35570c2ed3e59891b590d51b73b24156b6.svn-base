@@ -1,0 +1,31 @@
+package xyz.itwill.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dao.BudgetaryDAO;
+import xyz.itwill.dao.ExpensesDAO;
+import xyz.itwill.dto.Budgetary;
+
+@Controller
+@RequiredArgsConstructor
+public class BudgetaryController {
+	private final BudgetaryDAO budgetaryDAO;
+	private final ExpensesDAO expensesDAO;
+	
+	@RequestMapping(value = "/budgetary")
+	public String budgetary(Model model) {
+		
+		
+		if(budgetaryDAO.selectBudgetary()!=null) {
+			budgetaryDAO.updateBudgetary(null);
+		} else {
+			budgetaryDAO.insertBudgetary(null);
+		}
+		Budgetary budgetary = budgetaryDAO.selectBudgetary();
+		model.addAttribute("budgetary",budgetary);
+		return "budgetary/budgetary";
+	}
+}

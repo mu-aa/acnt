@@ -1,0 +1,72 @@
+package xyz.itwill.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dto.Budget;
+import xyz.itwill.service.BudgetService;
+
+@RequiredArgsConstructor
+@Controller
+public class BudgetController {
+    private static final Logger logger = LoggerFactory.getLogger(BudgetController.class);
+    private BudgetService budgetService;
+    
+	@RequestMapping(value = "/budget", method = RequestMethod.GET)
+	public String budget(Model model) {
+		Budget budget0=new Budget();
+		Budget budget1=new Budget();
+		Budget budget2=new Budget();
+		Budget budget3=new Budget();
+		Budget budget4=new Budget();
+		Budget budget5=new Budget();
+		Budget budget6=new Budget();
+		Budget budget7=new Budget();
+		Budget budget8=new Budget();
+		Budget budget9=new Budget();
+		Budget budget10=new Budget();
+		
+		List<Budget> budgetList=new ArrayList<Budget>();
+		budget0.setBCate(0);
+		budgetList.add(budget0);
+		budget1.setBCate(1);
+		budgetList.add(budget1);
+		budget2.setBCate(2);
+		budgetList.add(budget2);
+		budget3.setBCate(3);
+		budgetList.add(budget3);
+		budget4.setBCate(4);
+		budgetList.add(budget4);
+		budget5.setBCate(5);
+		budgetList.add(budget5);
+		budget6.setBCate(6);
+		budgetList.add(budget6);
+		budget7.setBCate(7);
+		budgetList.add(budget7);
+		budget8.setBCate(8);
+		budgetList.add(budget8);
+		budget9.setBCate(9);
+		budgetList.add(budget9);
+		budget10.setBCate(10);
+		budgetList.add(budget10);
+		
+		model.addAttribute("budgetList", budgetList);
+		/*model.addAttribute("", budgetService.getSumAllBudget());*/
+		return "table/budget";
+	}
+	
+	@RequestMapping(value = "/budget", method = RequestMethod.POST)
+	public String budget(Model model, Budget budget) {
+		budgetService.addBudget(budget);
+		
+		return "success";
+	}
+}

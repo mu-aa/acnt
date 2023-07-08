@@ -1,0 +1,15 @@
+package xyz.itwill.mapper;
+
+import xyz.itwill.dto.Budget;
+
+
+public interface BudgetMapper {
+	   Integer insertBudget(Budget budget);
+	   Integer updateBudget(Budget budget);
+	   Budget selectBudget(String bCate);
+	   Budget selectBudgetList();
+	   Integer selectSumAllBudget(String bCate);
+	}
+
+   
+

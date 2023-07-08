@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.itwill.mapper.IncomeMapper">
+	<insert id="insertIncome">
+		<selectKey resultType="int" keyProperty="inNo" order="BEFORE">
+			select income_seq.nextval from dual
+		</selectKey>
+		insert into income values(#{inNo}, #{inId}, #{inAcname}, #{inCate}, #{inAmount}, #{inMemo}, #{inDate})
+	</insert>
+
+	<update id="updateIncome">
+		update income set
+		in_id = #{inId},
+		in_cate = #{inCate},
+		in_amount = #{inAmount},
+		in_acname = #{inAcname},
+		in_memo = #{inMemo},
+		in_date = #{inDate}
+		where in_no = #{inNo}
+	</update>
+
+	<delete id="deleteIncome">
+		delete from income where in_no =#{inNo}
+	</delete>
+	
+	<select id="selectSumAllIncome" resultType="Integer">
+		select sum(in_amount) from income
+	</select>
+	
+	<select id="selectIncome" resultType="Income">
+		select * from Income where in_no=#{inNo}
+	</select>
+	
+	<select id="selectIncomeList" resultType="Income">
+		select * from Income order by in_no
+	</select>
+	
+	<select id="selectIncomeIdList" resultType="Income">
+		select * from Income where in_id = #{inId} order by in_no
+	</select>
+	
+	<select id="selectIncomeDateIdList" resultType="Income" >
+		select * from income where in_date = #{inDate} and in_id = #{inId } order by in_no
+	</select>
+</mapper>

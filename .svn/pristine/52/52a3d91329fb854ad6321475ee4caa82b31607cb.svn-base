@@ -1,0 +1,11 @@
+package xyz.itwill.service;
+
+import xyz.itwill.dto.Budget;
+
+public interface BudgetService {
+	void addBudget(Budget budget);
+	void modifyBudget(Budget budget);
+	Budget getBudget(Integer bCate);
+	Budget getBudgetList();
+	Integer getSumAllBudget(Integer bCate);
+}

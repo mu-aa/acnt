@@ -1,0 +1,17 @@
+package xyz.itwill.dto;
+
+import lombok.Data;
+
+/*
+이름     널?       유형        
+------ -------- --------- 
+B_CATE NOT NULL NUMBER(1) PK - 0~10(식비~미분류)
+B_SUM           NUMBER(9) 
+ */
+
+
+@Data
+public class Budget {
+	private Integer bSum;
+	private String bCate;
+}

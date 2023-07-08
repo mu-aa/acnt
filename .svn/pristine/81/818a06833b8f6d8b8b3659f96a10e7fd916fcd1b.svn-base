@@ -1,0 +1,17 @@
+package xyz.itwill.service;
+
+import java.util.List;
+
+import xyz.itwill.dto.Budget;
+
+public interface BudgetService {
+	 void addBudget(Budget budget);
+	 void modifyBudget (Budget budget);
+	 void deleteBudget (Budget budget);
+	 Budget getBudget (int num);
+	 Integer getSumAllBudget();
+	 List<Budget> getBudgetList();
+	 
+	 
+
+}

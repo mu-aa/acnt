@@ -1,0 +1,37 @@
+package xyz.itwill.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dao.AccountDAO;
+import xyz.itwill.dto.Account;
+
+@Service
+@RequiredArgsConstructor
+public class AccountServiceImpl implements AccountService {
+	private final AccountDAO accountDAO;
+	
+	@Override
+	public void addAccount(Account account) {
+		accountDAO.insertAccount(account);
+	}
+	
+	@Override
+	public void modifyAccount(Account account) {
+		accountDAO.updateAccount(account);
+		
+	}
+
+	@Override
+	public void removeAccount(String acName) {
+		accountDAO.deleteAccount(acName);
+	}
+
+	@Override
+	public List<Account> getAccountList() {
+		return accountDAO.selectAccountList();
+	}
+
+}

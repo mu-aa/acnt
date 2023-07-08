@@ -1,0 +1,14 @@
+package xyz.itwill.mapper;
+
+import java.util.List;
+
+import xyz.itwill.dto.Income;
+
+public interface IncomeMapper {
+	int insertIncome(Income income);
+	int updateIncome(Income income);
+	int deleteIncome(int inNo);
+	Integer selectSumAllIncome();
+	Income selectIncome(int inNo);
+	List<Income> selectIncomeList();
+}

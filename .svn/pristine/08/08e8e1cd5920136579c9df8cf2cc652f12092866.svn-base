@@ -1,0 +1,33 @@
+package xyz.itwill.dao;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dto.Budgetary;
+import xyz.itwill.mapper.BudgetaryMapper;
+
+@Repository
+@RequiredArgsConstructor
+public class BudgetaryDAOImpl implements BudgetaryDAO {
+	private final SqlSession sqlSession;
+	@Override
+	public int insertBudgetary(Budgetary budgetary) {
+	
+		return sqlSession.getMapper(BudgetaryMapper.class).insertBudgetary(budgetary);
+	}
+
+	@Override
+	public int updateBudgetary(Budgetary budgetary) {
+		
+		return sqlSession.getMapper(BudgetaryMapper.class).updateBudgetary(budgetary);
+	}
+
+	@Override
+	public Budgetary selectBudgetary() {
+		
+		return sqlSession.getMapper(BudgetaryMapper.class).selectBudgetary();
+			
+	}
+
+}

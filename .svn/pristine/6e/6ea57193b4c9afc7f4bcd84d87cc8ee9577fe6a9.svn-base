@@ -1,0 +1,110 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+
+	<!-- libraries -->
+	<link rel="stylesheet" type="text/css" href="resources/components2/font-awesome/css/font-awesome.css" />
+
+	<!-- global styles -->
+	<link rel="stylesheet" type="text/css" href="resources/css/compiled/theme_styles.css" />
+
+	<!-- Favicon -->
+	<link type="image/x-icon" href="favicon.png" rel="shortcut icon"/>
+
+
+</head>
+
+<body>
+	<h2>예산 쓰기</h2>
+										
+	<table id="table-budget" class="table table-hover">
+		<thead>
+			<tr>
+				<th>분류</th>
+				<th>예산</th>
+				<th>지출</th>
+				<th>남은 돈</th>
+			</tr>
+		</thead>
+	</table>
+			
+			
+	<table>
+		<tbody>
+			<tr>
+				<td><input type="text" name="예산"></td>
+				<td><input type="text" name="지출"></td>
+				<td><input type="text" name="남은돈"></td>
+			</tr>				
+		</tbody>
+	</table>
+<script>
+  // 카테고리를 변수로 지정
+  var category = document.getElementById("분류").textContent;
+
+  if (category === "식비") {
+	    document.getElementsByName("예산")[0].value = "200,000";
+	    document.getElementsByName("지출")[0].value = "200,000";
+	  }
+	  
+  if (category === "주거/통신") {
+	       document.getElementsByName("예산")[0].value = "20,000";
+	       document.getElementsByName("지출")[0].value = "200,000";
+	     }
+   if (category === "생활용품") {
+	       document.getElementsByName("예산")[0].value = "50,000";
+	       document.getElementsByName("지출")[0].value = "200,000";
+	     }
+  if (category === "의복/미용") {
+	       document.getElementsByName("예산")[0].value = "300,000";
+	       document.getElementsByName("지출")[0].value = "200,000";
+	     }
+	  
+   if (category === "건강/문화") {
+	       document.getElementsByName("예산")[0].value = "300,000";
+	       document.getElementsByName("지출")[0].value = "200,000";
+	  
+	  
+	if (category === "교통/차량") {
+	       document.getElementsByName("예산")[0].value = "100,000";
+		   document.getElementsByName("지출")[0].value = "200,000";
+	     }
+	 
+  budgetInput.value = budget.toLocaleString();
+  expenseInput.value = expense.toLocaleString();
+  budgetInput.setAttribute("type", "number");
+  budgetInput.setAttribute("pattern", "[0-9]+");
+}
+
+//예산과 지출을 가져오기
+var budget = Number(document.getElementsByName("예산")[0].value.replace(",", ""));
+var expense = Number(document.getElementsByName("지출")[0].value.replace(",", ""));
+
+// 남은 돈을 계산
+var remaining = budget - expense;
+
+// 계산된 남은 돈을 출력
+document.getElementsByName("남은돈")[0].value = remaining.toLocaleString();
+
+
+</script>
+							
+	<!-- global scripts -->
+	<script src="resources/components2/jquery/dist/jquery.min.js"></script>
+	<script src="resources/components2/bootstrap/dist/js/bootstrap.js"></script>
+	
+	<!-- this page specific scripts -->
+	<script src="resources/components2/datatables.net/js/jquery.dataTables.min.js"></script>
+	<script src="resources/components2/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+	<script src="resources/components2/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+	<script src="resources/components2/datatables.net-rowgroup/js/dataTables.rowGroup.min.js"></script>
+	<script src="resources/components2/datatables.net-select/js/dataTables.select.min.js"></script>
+	
+	<!-- theme scripts -->
+	<script src="resources/js/scripts.js"></script>
+	<script src="resources/components2/PACE/pace.min.js"></script>
+</body>
+</html>

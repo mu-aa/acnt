@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+.fixed {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			background-color: #f1f1f1;
+			padding: 20px 0;
+			text-align: center;
+      		display: flex;
+      		flex-direction: row;;
+		}
+/*		
+.fixed button {
+    margin-left: 300px;
+}
+*/
+.btn { 
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: white;
+    border:none;
+    border-style: none;
+}
+ #income-total-table td {
+      font-size: 19px;
+      border:0;
+    }
+#income-total {
+ 	 color: #3e7aff;
+}

@@ -1,0 +1,13 @@
+package xyz.itwill.dao;
+
+import java.util.List;
+
+import xyz.itwill.dto.Expenses;
+
+public interface ExpensesDAO {
+	int	insertExpenses(Expenses expenses);
+	int updateExpenses(Expenses expenses);
+	int deleteExpenses(int num);
+	Expenses selectExpenses(int num);
+	List<Expenses> selectExpensesList();
+}

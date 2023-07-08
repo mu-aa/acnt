@@ -1,0 +1,49 @@
+package xyz.itwill.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dao.IncomeDAO;
+import xyz.itwill.dto.Income;
+
+@RequiredArgsConstructor
+@Service
+public class IncomeServiceImpl implements IncomeService {
+	private final IncomeDAO incomeDAO;
+	
+	@Transactional
+	@Override
+	public void addIncome(Income income) {
+		incomeDAO.insertIncome(income);
+	}
+	
+	@Transactional
+	@Override
+	public void modifyIncome(Income income) {
+		incomeDAO.updateIncome(income);
+	}
+	
+	@Transactional
+	@Override
+	public void removeIncome(int num) {
+		incomeDAO.deleteIncome(num);
+	}
+	
+	@Override
+	public Integer selectSumAllIncome() {
+		return incomeDAO.selectSumAllIncome();
+	}
+
+	@Override
+	public Income getIncome(int num) {
+		return incomeDAO.selectIncome(num);
+	}
+
+	@Override
+	public List<Income> getIncomeList() {
+		return incomeDAO.selectIncomeList();
+	}
+}

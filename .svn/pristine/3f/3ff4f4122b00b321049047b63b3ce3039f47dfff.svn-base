@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+*{
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+}
+a{
+	text-decoration: none;
+	color: black;
+}
+.login-wrapper{
+    width: 400px;
+    height: 300px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+#login_t{
+    font-size: 24px;
+    color: #6ED746;
+    margin-bottom: 20px;
+}
+#idbox, #passwdbox, #loginBtn{
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+    border: none;
+}
+
+#loginBtn{
+    color: white;
+    font-size: 16px;
+    background-color: #6ED746;
+    
+}
+#link {
+	background-color: white;
+	font-size: 14px;
+	border: none;
+}
+.error {
+	color: red;
+	font-size: 15px;
+	text-align: left;
+	vertical-align: middle;
+}
+</style>
+<title>LoginForm</title>
+</head>
+<body>
+	<body>
+	<form id="login" method="post" action="<c:url value="/login"/>" >
+		<div class="login-wrapper">
+    		<h2 id="login_t">Login</h2>
+			<input id="idbox" type="text" name="userid" value="${userid}" placeholder="아이디">
+			<input id="passwdbox" type="password" name="passwd" placeholder="비밀번호">
+			<span id="loginMsg" class="error">${message }</span>
+			<button id="loginBtn" type="submit">로그인</button> 
+		</div>
+    </form>
+    
+    
+    <div style="text-align: center">
+	  	<%-- 
+	  	<a href="">아이디 찾기</a>&nbsp;&nbsp;
+	  	<a href="">비밀번호 찾기</a>&nbsp;&nbsp;
+	  	<a href="">회원가입</a>&nbsp;&nbsp;
+		--%>
+		<input id="link" type="button" value="아이디 찾기&nbsp;&nbsp;&nbsp;" onclick="location.href='<c:url value="/join"/>';">
+		<input id="link" type="button" value="비밀번호 찾기&nbsp;&nbsp;&nbsp;" onclick="location.href='<c:url value="/join"/>';">
+		<input id="link" type="button" value="회원가입" onclick="location.href='<c:url value="/join"/>';">
+    </div>
+    
+    <script type="text/javascript">
+    $("#login").submit(function() {
+    	var result=true;
+    	
+    	if($("#idbox").val()=="") {
+			$("#loginMsg").text("아이디를 입력해 주세요.");
+			result=false;
+		}
+    	
+    	if($("#passwdbox").val()=="") {
+			$("#loginMsg").text("비밀번호를 입력해 주세요.");
+			result=false;
+		}
+    	
+  
+    	return result;
+    });
+    </script>
+</body>
+</body>
+</html>

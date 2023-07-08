@@ -1,0 +1,87 @@
+package xyz.itwill.controller;
+
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dto.Member;
+import xyz.itwill.exception.ExistsUserinfoException;
+import xyz.itwill.exception.LoginAuthFailException;
+import xyz.itwill.exception.UserinfoNotFoundException;
+import xyz.itwill.service.MemberService;
+
+/**
+ * Handles requests for the application home page.
+ */
+@Controller
+@RequiredArgsConstructor
+public class HomeController {
+	private final MemberService memberService;
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public String main() {
+		return "main";
+	}
+	
+	//회원가입 관련
+	@RequestMapping(value="/join", method=RequestMethod.GET)
+	public String join() {
+		return "join/JoinForm";
+	}
+	@RequestMapping(value="/join", method=RequestMethod.POST)
+	public String join(@ModelAttribute Member member) throws ExistsUserinfoException {
+		memberService.addMember(member);
+		return "redirect:/login";
+	}
+	
+	
+	@RequestMapping(value="/idcheck", method=RequestMethod.GET)
+	@ResponseBody
+	public String idChekc(@RequestParam String userid) throws UserinfoNotFoundException {
+		Member member=memberService.getMember(userid);
+		return "fail";
+	}
+	
+	//로그인 관련
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String login() {
+		return "login/LoginForm";
+	}
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public String login(@ModelAttribute Member member, HttpSession session) throws LoginAuthFailException {
+		Member authMember=memberService.loginAuth(member);
+		session.setAttribute("loginMember", authMember);
+		return "login/LoginForm";
+	}
+	
+	@RequestMapping(value="/budget", method=RequestMethod.GET)
+	public String budget() {
+		return "table/budget";
+	}
+	@RequestMapping(value="/income", method=RequestMethod.GET)
+	public String income() {
+		return "income/income";
+	}
+	
+	@RequestMapping(value="/myAccount", method=RequestMethod.GET)
+	public String myAccount() {
+		return "popup/myAccount";
+	}
+	
+	@ExceptionHandler(UserinfoNotFoundException.class)
+	@ResponseBody
+	public String exceptionHanlder() {
+		return "success";
+	}
+}

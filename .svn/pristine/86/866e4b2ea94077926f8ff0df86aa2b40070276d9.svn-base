@@ -1,0 +1,163 @@
+package xyz.itwill.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dao.AccountDAO;
+import xyz.itwill.dao.CardDAO;
+import xyz.itwill.dao.ExpensesCollection;
+import xyz.itwill.dao.ExpensesDAO;
+import xyz.itwill.dao.IncomeDAO;
+import xyz.itwill.dto.Account;
+import xyz.itwill.dto.Card;
+import xyz.itwill.dto.Expenses;
+import xyz.itwill.dto.Income;
+import xyz.itwill.dto.IncomeCollection;
+import xyz.itwill.dto.Member;
+
+@Controller
+@RequiredArgsConstructor
+public class CalendarController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
+	private final ExpensesDAO expensesDAO;
+	private final CardDAO cardDAO;
+	private final AccountDAO accountDAO;
+	private final IncomeDAO incomeDAO;
+	
+	@RequestMapping(value="/calendar", method=RequestMethod.GET)
+	public String calender(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		String userid = loginMember.getUserid();
+		//String userid = "abc123456";
+		List<Income> incomeList = incomeDAO.selectIncomeIdList(userid);
+		List<Expenses> expensesList = expensesDAO.selectExpensesIdList(userid);
+		
+		model.addAttribute("expensesList", expensesList);
+		model.addAttribute("incomeList", incomeList);
+		
+		return "calendar/fullcalendar";
+	}
+	
+	@RequestMapping(value="/calendar/popup", method=RequestMethod.GET)
+	public String calenderPopup(@RequestParam String date,@RequestParam(required = false) String select,
+			HttpServletRequest request,Model model) throws Exception {
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		System.out.println("setdate =" +request.getParameter("setdate"));
+		if(request.getParameter("setdate") != null) {
+			date = request.getParameter("setdate");
+		}
+		String userid = loginMember.getUserid();
+		//String userid = "abc123456";
+		System.out.println("userid ="+userid);
+		System.out.println("select ="+select);
+		
+		if(select == null || select == ""){
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("exId", userid);
+			map.put("exDate", date);
+			List<Expenses> expensesList = expensesDAO.selectExpensesDateIdList(map);
+			System.out.println("expensesList ="+expensesList);
+			model.addAttribute("expensesList", expensesList);
+		}else if(select.equals("expenses")) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("exId", userid);
+			map.put("exDate", date);
+			 List<Expenses> expensesList = expensesDAO.selectExpensesDateIdList(map);
+			 System.out.println("expensesList ="+expensesList);
+			 model.addAttribute("expensesList", expensesList);
+			
+			
+		} else if (select.equals("income")) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("inId", userid);
+			map.put("inDate", date);
+			List<Income> incomeList = incomeDAO.selectIncomeDateIdList(map);
+			 System.out.println("incomeList ="+incomeList);
+			 model.addAttribute("incomeList", incomeList);
+			
+			 
+		}
+	
+		
+		 List<Card> cardList =cardDAO.selectCardList();
+		 List<Account> accountList = accountDAO.selectAccountList();
+		 
+		 model.addAttribute("cardList", cardList);
+		 model.addAttribute("accountList", accountList);
+		 model.addAttribute("exId", userid);
+		 model.addAttribute("exDate", date);
+		return "calendar/fullcalendarpopup";
+		
+	}
+	@RequestMapping(value="/calendar/popup", method=RequestMethod.POST)
+	public String calenderPopup(HttpServletRequest request,ExpensesCollection expensesCollection,
+			IncomeCollection incomeCollection) {
+		String date = "";
+		String select = "";
+		List<Income> incomeList = incomeCollection.getIncomeList();
+		List<Expenses> expensesList = expensesCollection.getExpensesList();
+		System.out.println("incomeList ="+incomeList);
+		System.out.println("expensesList ="+expensesList);
+		if(incomeList != null) {
+			
+			
+			for(Income income:incomeList) {
+				if(incomeDAO.selectIncome(income.getInNo())!=null) {
+					
+					incomeDAO.updateIncome(income);
+				} else {
+					date = income.getInDate();
+					select = "income";
+					incomeDAO.insertIncome(income);
+					incomeDAO.deleteAmountIncome();
+				}
+			
+			
+			}
+		} 
+		
+		if(expensesList != null) {
+			
+			for(Expenses expenses:expensesList) {
+				if(expensesDAO.selectExpenses(expenses.getExNo())!=null) {
+					
+					expensesDAO.updateExpenses(expenses);
+					
+				} else {
+					date = expenses.getExDate();
+					select = "expenses";
+					expensesDAO.insertExpenses(expenses);
+					expensesDAO.deleteCashCardExpenses();
+				}
+			
+			
+			}
+		} 
+		
+		System.out.println("date ="+date);
+		request.setAttribute("setdate", date);
+		return "redirect:/calendar/popup?date="+date+"&select="+select;
+		
+	}
+}

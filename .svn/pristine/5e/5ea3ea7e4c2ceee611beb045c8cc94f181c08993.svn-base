@@ -1,0 +1,12 @@
+package xyz.itwill.exception;
+//
+public class UserinfoNotFoundException extends Exception {
+	private static final long serialVersionUID = 1L;
+	//
+	public UserinfoNotFoundException() {//생성자
+		// TODO Auto-generated constructor stub
+	}
+	public UserinfoNotFoundException(String message) {
+		super(message);
+	}
+}

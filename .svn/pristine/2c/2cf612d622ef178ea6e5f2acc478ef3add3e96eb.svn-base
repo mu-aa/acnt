@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.itwill.mapper.MemberMapper">
+	<!-- =============================================================================================== -->
+	<insert id="insertMember">
+		insert into member values(#{userid},#{passwd},#{username},#{gender},#{phone},#{email},#{area},#{userstatus})
+	</insert>
+	<!-- =============================================================================================== -->
+	<update id="updateMember">
+		update member
+		<set>
+			<if test="passwd!=null and passwd!=''">
+				passwd=#{passwd},
+			</if>
+			<if test="username!=null and username!=''">
+				username=#{username},
+			</if>
+			<if test="gender==0 or gender==1">
+				gender=#{gender},
+			</if>
+			<if test="phone!=null and phone!=''">
+				phone=#{phone},
+			</if>
+			<if test="email!=null and email!=''">
+				email=#{email},
+			</if>
+			<if test="area gte 0 and area lte 6">
+				area=#{area}
+			</if>
+		</set>
+		where userid=#{userid}
+	</update>
+	
+	<!-- 
+	<update id="zeroMember">
+		update member set userstatus='0' where userid=#{userid}
+	</update>
+	-->
+	
+	<!-- =============================================================================================== -->
+	<delete id="deleteMember">
+		delete from member where userid=#{userid}
+	</delete>
+	<!-- =============================================================================================== -->
+	<select id="selectMember" resultType="Member">
+		select * from member where userid=#{userid}
+	</select>
+	<!-- =============================================================================================== -->
+	<select id="selectMemberList" resultType="Member">
+		select * from member order by userid
+	</select>
+</mapper>

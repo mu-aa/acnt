@@ -1,0 +1,11 @@
+package xyz.itwill.mapper;
+
+import xyz.itwill.dto.Budget;
+
+public interface BudgetMapper {
+   int insertBudget(Budget budget);
+   int updateBudget(Budget budget);
+   int deleteBudget(Budget budget);
+   Budget selectBudget(String b_cate);
+   
+}

@@ -1,0 +1,12 @@
+package xyz.itwill.dao;
+
+import xyz.itwill.dto.Budget;
+
+
+public interface BudgetDAO {
+	Integer insertBudget(Budget budget);
+	Integer updateBudget(Budget budget);
+	Budget selectBudget(String bCate);
+	Budget selectBudgetList();
+	Integer selectSumAllBudget(String bCate);
+}

@@ -1,0 +1,13 @@
+package xyz.itwill.dao;
+
+import java.util.List;
+
+import xyz.itwill.dto.Account;
+
+public interface AccountDAO {
+	int insertAccount(Account account);
+	int updateAccount(Account account);
+	int deleteAccount(String acName);
+	Account selectAccount(String acName);
+	List<Account> selectAccountList();
+}

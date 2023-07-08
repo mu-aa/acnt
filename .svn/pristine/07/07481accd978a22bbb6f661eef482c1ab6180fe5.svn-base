@@ -1,0 +1,78 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+.fixed {
+	display: flex;
+	position: fixed;
+	width: 100%;
+	bottom: 0; left: 0;
+	padding: 20px 0;
+	background-color: white;
+	text-align: center;
+	flex-direction: row;
+	box-shadow: -1px -1px 4px #AAAFB5;
+	z-index: 1;
+}
+/*		
+.fixed button {
+    margin-left: 300px;
+}
+*/
+.btn { 
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: white;
+    border:none;
+    border-style: none;
+    width: 1px;
+}
+ #income-total-table td {
+      font-size: 19px;
+      border:0;
+    }
+#income-total {
+ 	 color: #3e7aff;
+}
+</style>
+</head>
+
+
+<body>
+<%-- <link rel=stylesheet href="<c:url value="/resources/css/footer.css"/>" type="text/css"> --%>
+<hr>
+<div class="fixed">
+	<button id="delete-selected-rows-btn" style="margin-left: 300px;">선택 항목 삭제</button>
+
+	<table id="income-total-table">
+		<tfoot>
+			<tr>
+				<td>수입 합계: </td>
+				<td id="income-total">0</td>
+			</tr>
+		</tfoot>
+	</table>
+	
+	<button class="btn" type="button"><img src="resources/images/save.png"></button>
+</div>
+
+<script type="text/javascript">
+//선택된 항목 삭제
+let deleteSelectedRowsBtn = document.getElementById("delete-selected-rows-btn");
+deleteSelectedRowsBtn.addEventListener("click", function() {
+	let selectedRows = document.querySelectorAll("#income-table tbody input[type=checkbox]:checked");
+	for (let i = 0; i < selectedRows.length; i++) {
+		if (selectedRows[i].parentNode.parentNode.rowIndex !== 0) {
+			selectedRows[i].parentNode.parentNode.remove();
+		}
+	}
+	calculateIncomeTotal();
+});
+
+</script>
+</body>
+</html>

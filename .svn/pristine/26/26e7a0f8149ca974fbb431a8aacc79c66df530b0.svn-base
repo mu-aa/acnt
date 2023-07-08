@@ -1,0 +1,30 @@
+package xyz.itwill.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.service.BudgetService;
+
+@RequiredArgsConstructor
+@Controller
+public class BudgetController {
+    private static final Logger logger = LoggerFactory.getLogger(BudgetController.class);
+    private BudgetService budgetService;
+    
+	@RequestMapping(value = "/budget", method = RequestMethod.GET)
+	public String budget() {
+		return "table/budget";
+	}
+	
+	@RequestMapping(value = "/budget", method = RequestMethod.POST)
+	public String budget(Model model) {
+		model.addAttribute("budgetList",budgetService.getBudgetList());
+		return "table/budget";
+	}
+	
+}

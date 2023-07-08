@@ -1,0 +1,14 @@
+package xyz.itwill.service;
+
+import java.util.List;
+
+import xyz.itwill.dto.Income;
+
+public interface IncomeService {
+	void addIncome(Income income);
+	void modifyIncome(Income income);
+	void removeIncome(int num);
+	Integer getSumAllIncome();
+	Income getIncome(int num);
+	List<Income> getIncomeList();
+}

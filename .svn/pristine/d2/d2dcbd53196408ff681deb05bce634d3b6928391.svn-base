@@ -1,0 +1,9 @@
+@charset "UTF-8";
+.btn { 
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: white;
+    border:none;
+    border-style: none;
+}

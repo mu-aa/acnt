@@ -1,0 +1,89 @@
+package xyz.itwill.service;
+
+import java.util.List;
+
+import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.RequiredArgsConstructor;
+import xyz.itwill.dao.MemberDAO;
+import xyz.itwill.dto.Member;
+import xyz.itwill.exception.ExistsUserinfoException;
+import xyz.itwill.exception.LoginAuthFailException;
+import xyz.itwill.exception.MemberNotFoundException;
+
+@Service
+@RequiredArgsConstructor
+public class MemberServiceImpl implements MemberService {
+	private final MemberDAO memberDAO;
+	
+	@Transactional
+	@Override
+	public void addMember(Member member) throws ExistsUserinfoException {
+		if(memberDAO.selectMember(member.getUserid())!=null) {
+			throw new ExistsUserinfoException("이미 사용중인 아이디를 입력 하였습니다.", member);
+		}
+		//비밀번호 암호화 처리
+		String hashedPasswore=BCrypt.hashpw(member.getPasswd(), BCrypt.gensalt());
+		member.setPasswd(hashedPasswore);
+		//
+		memberDAO.insertMember(member);
+	}
+	@Transactional
+	@Override
+	public void modifyMember(Member member) throws MemberNotFoundException {
+		if(memberDAO.selectMember(member.getUserid())==null) {
+			throw new MemberNotFoundException("아이디의 회원정보가 존재하지 않습니다.");
+		}
+		if(member.getPasswd()!=null && !member.getPasswd().equals("")) {
+			String hashedPassword=BCrypt.hashpw(member.getPasswd(), BCrypt.gensalt());
+			member.setPasswd(hashedPassword);
+		}
+		memberDAO.updateMember(member);
+	}
+	
+	@Transactional
+	@Override//탈퇴관련
+	public void zeroMember(String userid) throws MemberNotFoundException {
+		if(memberDAO.selectMember(userid)==null) {
+			throw new MemberNotFoundException("아이디의 회원정보가 존재하지 않습니다.");
+		}
+		memberDAO.zeroMember(userid);
+	}
+	
+	@Transactional
+	@Override
+	public void removeMember(String userid) throws MemberNotFoundException {
+		if(memberDAO.selectMember(userid)==null) {
+			throw new MemberNotFoundException("아이디의 회원정보가 존재하지 않습니다.");
+		}
+		memberDAO.deleteMember(userid);
+	}
+
+	@Override
+	public Member getMember(String userid) throws MemberNotFoundException {
+		Member member=memberDAO.selectMember(userid);
+		if(member==null) {
+			throw new MemberNotFoundException("아이디의 회원정보가 존재하지 않습니다.");
+		}
+		return member;
+	}
+	
+	@Override
+	public List<Member> getMemberList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Member loginAuth(Member member) throws LoginAuthFailException {
+		Member authMember=memberDAO.selectMember(member.getUserid());
+		if(authMember==null) {
+			throw new LoginAuthFailException("아이디의 회원정보가 존재하지 않습니다.", member.getUserid());
+		}
+		if(!BCrypt.checkpw(member.getPasswd(), authMember.getPasswd())) {
+			throw new LoginAuthFailException("아이디가 없거나 비밀번호가 맞지 않습니다.", member.getUserid());
+		}
+		return authMember;
+	}
+}
