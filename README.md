@@ -23,7 +23,7 @@
 ![3 지출](https://github.com/mu-aa/acnt/assets/122263555/3e8de2ae-bf16-4368-b4bf-9c2845bcc9f1)
   - 날짜, 출금계좌명, 분류는 option창에서 선택 / 현금, 카드, 메모는 직접 입력
 ![3-1 지출](https://github.com/mu-aa/acnt/assets/122263555/65a8be40-f2bd-44c2-9c30-ee0827b8c779)
-![3-2 지출](https://github.com/mu-aa/acnt/assets/122263555/929cd818-70c8-410b-8945-fe4e5a469425)
+![3-2 지출](https://github.com/mu-aa/acnt/assets/122263555/559a7536-0e85-47ca-865a-1bf6ded5856e)
   - 열 추가 버튼 클릭 시 열 추가 생성
 ![3-3 지출](https://github.com/mu-aa/acnt/assets/122263555/ad72f314-57e5-438a-9342-be9749d00bfb)
   - 선택 항목 삭제(열 삭제) 버튼 클릭 시 선택 열 삭제, 상단 체크박스로 전체 선택
@@ -52,6 +52,9 @@
 ![6 예산](https://github.com/mu-aa/acnt/assets/122263555/3168bb88-2d80-4f4e-a022-0fffd8497154)
   - 값 입력 후 저장 버튼 클릭 시 DB에 저장
 ![6-1 예산](https://github.com/mu-aa/acnt/assets/122263555/ffdc3c97-9a9e-4b41-bfb9-c7f907e20069)
-  - 지출 페이지에 계산값에 맞는 그래프 출력(지출이 예산 초과 시 붉은 그래프, 미초과시 초록 그래프, 예산-지출값 회색 그래프)
+  - 지출 페이지에 계산값에 맞는 그래프 출력
 ![6-2 예산](https://github.com/mu-aa/acnt/assets/122263555/cbdb97b9-908c-4cb3-96b1-4fb1aa7081d5)
+  - 지출이 예산 초과 시 붉은 그래프, 미초과시 초록 그래프, 예산에서 지출 차감값 회색 그래프
+![6-3 예시](https://github.com/mu-aa/acnt/assets/122263555/5d543a53-dc85-46d1-9aab-5bfec8ff0b58)
+
 
