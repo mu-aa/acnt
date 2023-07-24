@@ -3,7 +3,13 @@
 - 인원/직책 : 4명/팀장
 - 개발기간 : 2023.01 ~ 2023.03
 - 주제 : 가계부 사이트, 네이버 가계부 레퍼런스
-- 링크 : http://itwill.xyz/acnt/
+- 링크 : http://itwill.xyz/acnt
+- 담당 업무)
+  - 수입, 지출, 예산에 대한 값 CRUD 처리
+  - 저장된 수입, 지출, 예산 DB값을 반영한 그래프를 chart.js 라이브러리를 이용해 제작
+  - 수입, 지출, 예산 값에 따른 그래프 계산 식 작성
+  - 전체 페이지 css
+  - Exception Handler를 사용한 예외 처리
 
 ![image](https://github.com/mu-aa/acnt/assets/122263555/e14fdeb3-eb08-44b8-b096-e21b4710a200)
 ![image](https://github.com/mu-aa/acnt/assets/122263555/e1392513-d493-4c80-8757-5475189b9cb5)
