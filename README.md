@@ -2,7 +2,7 @@
 - 팀명 : acnt
 - 인원/직책 : 4명/팀장
 - 개발기간 : 2023.01 ~ 2023.03
-- 주제 : 가계부 사이트
+- 주제 : 가계부 사이트, 네이버 가계부 레퍼런스
 - 링크 : http://itwill.xyz/acnt/
 
 ![image](https://github.com/mu-aa/acnt/assets/122263555/e14fdeb3-eb08-44b8-b096-e21b4710a200)
